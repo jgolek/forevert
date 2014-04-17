@@ -2,14 +2,16 @@ package org.forevert;
  
 import java.io.IOException;
 
-import javax.ws.rs.DefaultValue;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import javax.xml.bind.JAXBElement;
 
 import org.forevert.model.Page;
 import org.forevert.unit.html.BuildAHtmlPageFlow;
@@ -24,7 +26,7 @@ public class ForevertService {
 
 	@GET
 	public Response getStartPage() throws PageIoException, IOException {
-		return this.showPage("test");
+		return this.showPage("getuserdata");
 	}
 	
 	@GET
@@ -38,6 +40,17 @@ public class ForevertService {
 		}else{
 			return showPage(pageName);
 		}
+	}
+	
+	@PUT
+	@Path("{pageName}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response savePage(Page page, @PathParam("pageName") String pageName ) throws PageIoException, IOException {
+		page.name = pageName;
+		
+		PageIo.save(page);
+		
+		return Response.status(200).build();
 	}
 
 	public Response showPage(String pageName) throws PageIoException, IOException {

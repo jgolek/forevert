@@ -28,7 +28,7 @@
 	          </ul>
 	      
   				<ul class="nav navbar-nav navbar-right">
-		       	  <li><form action="?"><a type="button" class="btn btn-primary btn-sm navbar-btn">Save</a></form></li>
+		       	  <li><form action="?"><a id="saveButton" type="button" class="btn btn-primary btn-sm navbar-btn">Save</a></form></li>
 			      <li><a href="?">View</a></li>
 			    </ul>
 			    <!-- why? -->
@@ -58,7 +58,7 @@
 	    var editor = ace.edit("editor");
 	    editor.getSession().setMode("ace/mode/markdown");
 	</script>
-	    
+	<script src="/js/forevert.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>
 {/template}
@@ -88,8 +88,8 @@
 {template .navigation}
 
 <ol class="list-unstyled" >
-  <li><a style="padding:5px 10px; display:block" href="#">add user</a></li>	              
-  <li><a style="padding:5px 10px; display:block; border-right: 5px solid #428bca;margin-right: -1px;z-index: 0;background-color: #d9edf7;" href="#">get user data</a></li>
+  <li><a style="padding:5px 10px; display:block" href="adduser">add user</a></li>	              
+  <li><a style="padding:5px 10px; display:block; border-right: 5px solid #428bca;margin-right: -1px;z-index: 0;background-color: #d9edf7;" href="getuserdata">get user data</a></li>
 </ol>
 
 {/template}

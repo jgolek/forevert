@@ -3,6 +3,8 @@ package org.forevert.unit.io;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.io.FileUtils;
 import org.forevert.model.Page;
 
@@ -16,12 +18,10 @@ public class PageIo {
 	 * @throws IOException
 	 */
 	public static Page find(String pageName) throws PageIoException{
-		String baseDir = ".";
-		String pathWithFileName = pageName + "/content.md";
-		File   pageFile = new File(baseDir, pathWithFileName);
-
+		File pageFile = toPageFile(pageName);
+		
 		if(!pageFile.exists()){
-			throw new PageIoException("Page not found. File "+pageFile.getAbsolutePath()+" doesn't exist");
+			throw new PageIoException("Page not found. File "+pageFile.getAbsolutePath()+" doesn't exist. ");
 		}
 		
 		String pageMarkdownContent = null;
@@ -36,5 +36,22 @@ public class PageIo {
 		page.content = pageMarkdownContent;
 		
 		return page;
+	}
+
+	private static File toPageFile(String pageName) throws PageIoException {
+		String baseDir = ".";
+		String pathWithFileName = pageName + "/content.md";
+		File   pageFile = new File(baseDir, pathWithFileName);
+		return pageFile;
+	}
+
+	public static void save(Page page) throws PageIoException {
+		File pageFile = toPageFile(page.name);
+		
+		try {
+			FileUtils.write(pageFile, page.content);
+		} catch (IOException e) {
+			throw new PageIoException("Coudn't write page content to file " + pageFile.getAbsolutePath(), e);
+		}
 	}
 }
